@@ -1,20 +1,15 @@
 package mop_user
 
-import (
-	"gorm.io/gorm"
-)
-
 type UserRegistration struct {
 	FirstName      string `json:"first_name"`
 	LastName       string `json:"last_name"`
 	Email          string `json:"email"`
 	Password       string `json:"password"`
 	PasswordRepeat string `json:"password_repeat"`
-	db             *gorm.DB
 }
 
-func NewUserRegistration(db *gorm.DB) *UserRegistration {
-	return &UserRegistration{db: db}
+func NewUserRegistration() *UserRegistration {
+	return &UserRegistration{}
 }
 
 func (r *UserRegistration) Validate() error {
