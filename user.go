@@ -14,3 +14,7 @@ type User struct {
 func NewUser(db *gorm.DB) *User {
 	return &User{db: db}
 }
+
+func (u *User) Register(data UserRegistration) error {
+	return nil
+}
