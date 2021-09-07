@@ -4,14 +4,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 	"log"
+	"time"
 )
 
 type User struct {
-	ID        int    `gorm:"primaryKey;" json:"id"`
-	FirstName string `gorm:"not null;type:varchar(70);" json:"first_name"`
-	LastName  string `gorm:"not null;type:varchar(70);" json:"last_name"`
-	Email     string `gorm:"not null;uniqueIndex:ux_email;type:varchar(255);" json:"email"`
-	Password  string `gorm:"not null;type:varchar(255)" json:"password"`
+	ID        int        `gorm:"primaryKey;" json:"id"`
+	FirstName string     `gorm:"not null;type:varchar(70);" json:"first_name"`
+	LastName  string     `gorm:"not null;type:varchar(70);" json:"last_name"`
+	Email     string     `gorm:"not null;uniqueIndex:ux_email;type:varchar(255);" json:"email"`
+	Password  string     `gorm:"not null;type:varchar(255)" json:"password"`
+	CreatedAt time.Time  `gorm:"not null;default:CURRENT_TIMESTAMP;" json:"created_at"`
+	UpdatedAt time.Time  `gorm:"not null;default:CURRENT_TIMESTAMP;" json:"updated_at"`
+	DeletedAt *time.Time `json:"deleted_at"`
 	db        *gorm.DB
 }
 
