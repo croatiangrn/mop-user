@@ -26,7 +26,12 @@ func NewUser(db *gorm.DB) *User {
 func (u *User) Register(data UserRegistration) error {
 	query := `INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)`
 
-	if err := u.db.Debug().Exec(query, data.FirstName, data.LastName, data.Email, data.Password).Error; err != nil {
+	hashedPass, hashedPassErr := hashPassword(data.Password)
+	if hashedPassErr != nil {
+		return hashedPassErr
+	}
+
+	if err := u.db.Debug().Exec(query, data.FirstName, data.LastName, data.Email, hashedPass).Error; err != nil {
 		log.Printf("error while registering user: %v\n", err)
 		return ErrInternal
 	}
@@ -40,11 +45,6 @@ func (u *User) Register(data UserRegistration) error {
 	u.FirstName = data.FirstName
 	u.LastName = data.LastName
 	u.Email = data.Email
-	hashedPass, hashedPassErr := hashPassword(data.Password)
-	if hashedPassErr != nil {
-		return hashedPassErr
-	}
-
 	u.Password = hashedPass
 
 	return nil
