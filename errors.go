@@ -8,4 +8,6 @@ var (
 	ErrEmailInvalid     = errors.New("email_is_not_valid")
 	ErrPasswordTooShort = errors.New("password_too_short")
 	ErrPasswordMismatch = errors.New("password_and_password_repeat_mismatch")
+	ErrInternal         = errors.New("internal_error")
+	ErrHashingPassword  = errors.New("could_not_hash_the_password")
 )
