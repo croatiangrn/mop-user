@@ -13,8 +13,8 @@ type User struct {
 	LastName  string     `gorm:"not null;type:varchar(70);" json:"last_name"`
 	Email     string     `gorm:"not null;uniqueIndex:ux_email;type:varchar(255);" json:"email"`
 	Password  string     `gorm:"not null;type:varchar(255)" json:"password"`
-	CreatedAt time.Time  `gorm:"not null;default:CURRENT_TIMESTAMP;" json:"created_at"`
-	UpdatedAt time.Time  `gorm:"not null;default:CURRENT_TIMESTAMP;" json:"updated_at"`
+	CreatedAt time.Time  `gorm:"not null;" json:"created_at"`
+	UpdatedAt time.Time  `gorm:"not null;" json:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at"`
 	db        *gorm.DB
 }
