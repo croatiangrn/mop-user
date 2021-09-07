@@ -33,6 +33,9 @@ func (u *User) Register(data UserRegistration) error {
 
 	if err := u.db.Debug().Exec(query, data.FirstName, data.LastName, data.Email, hashedPass).Error; err != nil {
 		log.Printf("error while registering user: %v\n", err)
+		if isUniqueConstraintViolation(err) {
+			return ErrEmailTaken
+		}
 		return ErrInternal
 	}
 
