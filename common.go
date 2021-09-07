@@ -21,5 +21,5 @@ func getLastInsertedID(db *gorm.DB) (int, error) {
 
 func isUniqueConstraintViolation(err error) bool {
 	var mysqlErr *mysql.MySQLError
-	return errors.As(err, &mysqlErr) && mysqlErr.Number == 1062
+	return errors.As(err, &mysqlErr) && mysqlErr.Number == uniqueConstraintViolationMysqlErrNum
 }
