@@ -15,7 +15,7 @@ type User struct {
 	Password  string     `gorm:"not null;type:varchar(255)" json:"password"`
 	CreatedAt time.Time  `gorm:"not null;" json:"created_at"`
 	UpdatedAt time.Time  `gorm:"not null;" json:"updated_at"`
-	DeletedAt *time.Time `json:"deleted_at"`
+	DeletedAt *time.Time `json:"-"`
 	db        *gorm.DB
 }
 
