@@ -28,14 +28,15 @@ func NewUser(db *gorm.DB) *User {
 }
 
 func (u *User) Register(data UserRegistration) error {
-	query := `INSERT INTO users (first_name, last_name, email, password) VALUES (?, ?, ?, ?)`
+	currentTime := time.Now()
+	query := `INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)`
 
 	hashedPass, hashedPassErr := hashPassword(data.Password)
 	if hashedPassErr != nil {
 		return hashedPassErr
 	}
 
-	if err := u.db.Debug().Exec(query, data.FirstName, data.LastName, data.Email, hashedPass).Error; err != nil {
+	if err := u.db.Debug().Exec(query, data.FirstName, data.LastName, data.Email, hashedPass, currentTime, currentTime).Error; err != nil {
 		log.Printf("error while registering user: %v\n", err)
 		if isUniqueConstraintViolation(err) {
 			return ErrEmailTaken
