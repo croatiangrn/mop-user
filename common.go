@@ -1,6 +1,8 @@
 package mop_user
 
 import (
+	"errors"
+	"github.com/go-sql-driver/mysql"
 	"gorm.io/gorm"
 	"log"
 )
@@ -15,4 +17,9 @@ func getLastInsertedID(db *gorm.DB) (int, error) {
 	}
 
 	return lastInsertedID, nil
+}
+
+func isUniqueConstraintViolation(err error) bool {
+	var mysqlErr *mysql.MySQLError
+	return errors.As(err, &mysqlErr) && mysqlErr.Number == 1062
 }
