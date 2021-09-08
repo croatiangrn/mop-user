@@ -31,7 +31,7 @@ func (u *User) Register(data UserRegistration) error {
 	currentTime := time.Now()
 	query := `INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)`
 
-	hashedPass, hashedPassErr := hashPassword(data.Password)
+	hashedPass, hashedPassErr := HashPassword(data.Password)
 	if hashedPassErr != nil {
 		return hashedPassErr
 	}
@@ -58,7 +58,7 @@ func (u *User) Register(data UserRegistration) error {
 	return nil
 }
 
-func hashPassword(password string) (string, error) {
+func HashPassword(password string) (string, error) {
 	hashBytes, err := bcrypt.GenerateFromPassword([]byte(passwordSalt+password), 5)
 	if err != nil {
 		log.Printf("error while hashing the password: %v\n", err)
@@ -68,7 +68,7 @@ func hashPassword(password string) (string, error) {
 	return string(hashBytes), err
 }
 
-func checkPasswordHash(password, hash string) bool {
+func CheckPasswordHash(password, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(passwordSalt+password))
 	return err == nil
 }
