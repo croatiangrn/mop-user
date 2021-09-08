@@ -33,7 +33,7 @@ func (l *UserLoginRequestData) ProcessLogin() (*UserLoginResponseData, error) {
 		return nil, ErrInternal
 	}
 
-	if !checkPasswordHash(l.Password, user.Password) {
+	if !CheckPasswordHash(l.Password, user.Password) {
 		return nil, ErrInvalidMailOrPassword
 	}
 
